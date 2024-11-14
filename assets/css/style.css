@@ -281,7 +281,7 @@ input[type=text] {
 	flex-direction: column;
 	align-items: center;
 	clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
-	/* visibility: hidden; */
+	visibility: hidden;
 }
 
 .score-zone h2 {
