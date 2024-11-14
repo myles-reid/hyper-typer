@@ -90,6 +90,7 @@ class Score {
 
 function startCountDown() {
   let time = 3
+  countDownTimer.innerHTML = `<h2>${time}</h2>`;
   const intervalID = setInterval(() => {
     if (time > 1){
       countDownTimer.innerHTML = `<h2>${time -= 1}</h2>`;
@@ -129,6 +130,12 @@ function gameStateActive() {
   toggleVisibility(highScoreBox, 'visible');
 }
 
+function gameStateDeactive() {
+  toggleVisibility(activeWord, 'hidden');
+  toggleVisibility(inputBox, 'hidden');
+  toggleVisibility(startBtn, 'visible');
+}
+
 let score = 0;
 function updateScore() {
   score += 1;
@@ -136,7 +143,7 @@ function updateScore() {
 }
 
 function startTimer() {
-  let time = 120
+  let time = 10
   timer.innerText = `${time}`
   const intervalID = setInterval(() => {
     if (time > 1){
@@ -144,6 +151,7 @@ function startTimer() {
     } else {
       timer.innerText = `END`
       clearInterval(intervalID);
+      gameStateDeactive();
     }
   }, 1000);
 };
@@ -159,7 +167,6 @@ listen('click', startBtn, () => {
     startTimer();
     inputBox.focus();
   }, 3500);
-  console.log(inputBox);
 });
 
 
@@ -171,6 +178,7 @@ listen('input', inputBox, () => {
     inputBox.focus();
   };
 })
+
 
 
 
