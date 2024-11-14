@@ -71,6 +71,16 @@ const activeWord = select('.words');
 const startBtn = select('.start');
 const inputBox = select('.input');
 const highScoreBox = select('.score-zone');
+const restartBtn = select('.restart');
+const firstPlace = select('.first');
+const secondPlace = select('.second');
+const thirdPlace = select('.third');
+const gameMusic = new Audio('./assets/audio/bgmusic.mp3');
+const collectSound = new Audio('./assets/audio/collect.mp3')
+collectSound.type = 'audio/mp3';
+collectSound.volume = 0.2;
+gameMusic.type = 'audio/mp3';
+gameMusic.volume = 0.2;
 
 class Score {
   #date;
@@ -83,9 +93,9 @@ class Score {
     this.#percentage = percentage;
   }
 
-  getDate() { return this.#date };
-  getScore() { return this.#score };
-  getPercentage() { return this.#percentage };
+  get date() { return this.#date };
+  get score() { return this.#score };
+  get percentage() { return this.#percentage };
 }
 
 function startCountDown() {
@@ -103,6 +113,7 @@ function startCountDown() {
 
 const words = [...wordBank];
 const usedWords = [];
+const highScores = [];
 
 
 function shuffleArray(array) {
@@ -141,7 +152,7 @@ function gameStateActive() {
 function gameStateDeactive() {
   toggleVisibility(activeWord, 'hidden');
   toggleVisibility(inputBox, 'hidden');
-  toggleVisibility(startBtn, 'visible');
+  toggleVisibility(restartBtn, 'visible');
 }
 
 let score = 0;
@@ -150,8 +161,27 @@ function updateScore() {
   currentScore.innerHTML = `<p>Words Saved: ${score}</p>`;
 }
 
+
+function getDate() {
+  const options = {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit' 
+  } 
+
+  return new Date().toLocaleDateString('en-ca', options);
+}
+
+function createNewScore() {
+  let percentage = (score / wordBank.length) * 100;
+  const highScore = new Score(getDate(), score, percentage.toFixed(1));
+  highScores.push(highScore);
+
+  return score = 0;
+}
+
 function startTimer() {
-  let time = 10
+  let time = 120
   timer.innerText = `${time}`
   const intervalID = setInterval(() => {
     if (time > 1){
@@ -160,31 +190,92 @@ function startTimer() {
       timer.innerText = `END`
       clearInterval(intervalID);
       gameStateDeactive();
+      createNewScore();
+      gameMusic.pause();
+      setHighScores();
     }
   }, 1000);
 };
+
+function setCountDownState() {
+  toggleVisibility(countDownTimer, 'visible');
+  toggleVisibility(toolBar, 'hidden');
+  toggleVisibility(highScoreBox, 'hidden');
+}
+
+function startGame() {
+  setTimeout(() => {
+    gameStateActive();
+    setWord();
+    startTimer();
+    gameMusic.load();
+    gameMusic.play();
+    inputBox.focus();
+  }, 3500);
+}
+
+function sortScores(scores) {
+  let sortedScores = scores.sort(function(a, b){
+    return b.score - a.score;
+  })
+  return sortedScores;
+}
+
+function setHighScores() {
+  let sortedScores = sortScores(highScores);
+  console.log(sortedScores[0]);
+  if (highScores.length >= 3) {
+    firstPlace.innerText = `#1: ${sortedScores[0].score} on ${sortedScores[0].date}`;
+    secondPlace.innerText = `#2: ${sortedScores[1].score} on ${sortedScores[1].date}`;
+    thirdPlace.innerText = `#3: ${sortedScores[2].score} on ${sortedScores[2].date}`;
+    return;
+  }
+  if (highScores.length === 2) {
+    firstPlace.innerText = `#1: ${sortedScores[0].score} on ${sortedScores[0].date}`;
+    secondPlace.innerText = `#2: ${sortedScores[1].score} on ${sortedScores[1].date}`;
+    thirdPlace.innerText = `#3: Your Score here`;
+    return;
+  }
+  if (highScores.length === 1) {
+    firstPlace.innerText = `#1: ${sortedScores[0].score} on ${sortedScores[0].date}`;
+    secondPlace.innerText = `#2: Your Name here`;
+    thirdPlace.innerText = `#3: Your Name here`;
+    return;
+  }
+}
 
 listen('click', startBtn, () => {
   toggleVisibility(instructions, 'hidden');
   toggleVisibility(startBtn, 'hidden');
   toggleVisibility(countDownTimer, 'visible');
   startCountDown();
-  setTimeout(() => {
-    gameStateActive();
-    setWord();
-    startTimer();
-    inputBox.focus();
-  }, 3500);
+  startGame();
 });
 
 
 listen('input', inputBox, () => {
   if (inputBox.value.toUpperCase().trim() === activeWord.innerText) { 
+    collectSound.play();
     setWord()
     updateScore();
     inputBox.value = '';
     inputBox.focus();
   };
+  if (words.length === 0){
+    gameStateDeactive();
+    clearInterval(intervalID);
+    createNewScore();
+  }
+})
+
+listen('click', restartBtn, () => {
+  toggleVisibility(restartBtn, 'hidden');
+  inputBox.value = '';
+  currentScore.innerHTML = `<p>Words Saved: ${score}</p>`;
+  resetWords();
+  setCountDownState();
+  startCountDown();
+  startGame();
 })
 
 

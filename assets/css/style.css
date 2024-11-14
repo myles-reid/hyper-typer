@@ -138,8 +138,11 @@ main {
 }
 
 .time {
-	font-size: 50px;
-	margin-left: 5px;
+	color: #fff;
+	font-size: 40px;
+	width: 80px;
+	text-align: center;
+	font-variant-numeric: tabular-nums;
 }
 
 .rescues {
@@ -184,7 +187,7 @@ main {
 	visibility: hidden;
 }
 
-.start {
+.start, .restart {
 	height: 50px;
 	width: 150px;
 	font-size: 30px;
@@ -207,7 +210,7 @@ main {
 	/* visibility: hidden; */
 }
 
-.start:hover {
+.start:hover, .restart:hover {
 	box-shadow:
 	inset 0 0 10px 1 #fff,     
 	inset 10px 0 60px #9429f0,
@@ -220,11 +223,15 @@ main {
 	transform: scale(1.02);
 }
 
-.start:active {
+.start:active, .restart:active {
 	transition: transform 0.1s ease-out;
 	transform: scale(1);
 }
 
+.restart {
+	position: absolute;
+	visibility: hidden;
+}
 
 
 .input {
@@ -245,10 +252,45 @@ input[type=text] {
 .score-zone {
 	height: 200px;
 	width: 250px;
-	background: rgb(0 0 0 / 30%);
-	backdrop-filter: saturate(180%) blur(20px);
+	background: rgb(0 0 0 / 60%);
+	backdrop-filter: saturate(200%) blur(20px);
+	color: #fff;
 	align-self: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 	visibility: hidden;
+}
+
+.score-zone h2 {
+	color: rbg(0 0 0 / 20%);
+	text-decoration: underline;
+	padding-left: 20px;
+	padding-top: 5px;
+	text-shadow:
+	0 0 4px #000,
+	0 0 7px #fff,
+	0 0 10px #fff,
+	0 0 21px #fff,
+	0 0 42px #5271ff,
+	0 0 82px #5271ff,
+	0 0 92px #5271ff,
+	0 0 102px #5271ff,
+	0 0 151px #5271ff;
+}
+
+.scores {
+	height: 120px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.first, .third {
+	padding-left: 20px;
+}
+.second {
+	padding-right: 55px;
 }
 
