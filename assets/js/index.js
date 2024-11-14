@@ -102,6 +102,8 @@ function startCountDown() {
 };
 
 const words = [...wordBank];
+const usedWords = [];
+
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -113,13 +115,19 @@ function shuffleArray(array) {
 
 function getWord(array) {
   shuffleArray(array)
-
-  let word = array.pop().toUpperCase();
-  return word; 
+  let word = array.pop();
+  usedWords.push(word);
+  return word.toUpperCase(); 
 }
 
 function setWord() {
   activeWord.innerHTML = `<h2>${getWord(words)}</h2>`;
+}
+
+function resetWords() {
+  for (let i = usedWords.length - 1; i > 0; i--){
+    words.push(usedWords[i]);
+  }
 }
 
 function gameStateActive() {
