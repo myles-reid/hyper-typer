@@ -1,0 +1,25 @@
+Game:
+
+Colourful and playful
+time doesnt start until you hit start
+Cant see anything until started
+
+plays music.
+focus always
+just type, no button
+once the letters are correct, can't delete right part(not needed);
+sound after each word
+
+block the input bar when not running
+
+music must be longer than the time
+
+change before final push, to 15 or so
+restart the game w/o reloading
+
+higlight, for loop, break work into spans. when you enter you add a class to
+each span that matches in the order. 
+
+user select none
+
+

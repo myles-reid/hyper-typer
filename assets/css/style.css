@@ -1,0 +1,254 @@
+@charset "utf-8";
+@import url(./utils.css);
+@import url(./root.css);
+
+html {
+  font-family: 'Nunito Sans', 'Fira Sans', Arial, sans-serif;
+}
+
+body {
+  background-color: var(--app-color-dark-bg);
+  height: 100svh;
+  overflow:hidden;
+	display: relative;
+}
+
+.video-wrap {
+	overflow: hidden;
+	width: 100%;
+	aspect-ratio: 16/9;
+	pointer-events: none;
+  position: absolute;
+	z-index: -99;
+	
+  iframe {
+		width: 300%;
+		height: 100%;
+		margin-left: -100%;
+	}
+}
+
+.instructions {
+	position: absolute;
+	height: 200px;
+	width: 375px;
+	color: white;
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	top: 35%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: rgb(0 0 0 / 60%);
+	backdrop-filter: saturate(180%) blur(20px);
+	border-radius: 12px;
+	/* visibility: hidden; */
+}
+
+.count-down {
+	position: absolute;
+	font-size: 70px;
+	color: white;
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-shadow:
+			0 0 2px #000,
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #ccff00,
+      0 0 80px #ccff00,
+      0 0 90px #ccff00,
+      0 0 100px #ccff00,
+      0 0 150px #ccff00;
+	visibility: hidden;
+}
+
+.title {
+	font-family: "Send Flowers", cursive;
+	font-size: 30px;
+	position: absolute;
+	display: flex;
+	left: 0;
+	right: 0;
+	top: 20px;
+	margin-inline: auto;
+	width: fit-content;
+	color: #fff;
+	text-shadow:
+			0 0 2px #000,
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #ccff00,
+      0 0 80px #ccff00,
+      0 0 90px #ccff00,
+      0 0 100px #ccff00,
+      0 0 150px #ccff00;
+	
+}
+
+.wrapper {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+main {
+	height: 100svh;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	justify-items: center;
+}
+
+.tools {
+	height: 175px;
+	width: 250px;
+	background: rgb(0 0 0 / 30%);
+	backdrop-filter: saturate(180%) blur(20px);
+	align-self:center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	border-radius: 8px;
+	clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+	visibility: hidden;
+}
+
+.timer {
+	height: 80px;
+	width: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.stopwatch {
+	height: 60px;
+	aspect-ratio: 1;
+}
+
+.time {
+	font-size: 50px;
+	margin-left: 5px;
+}
+
+.rescues {
+	color: #fff;
+	font-size: 18px;
+	font-variant-numeric: tabular-nums;
+	height: 60px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.rescues p {
+	width: 175px;
+	padding-left: 20px;
+}
+
+.play-zone {
+	height: 50svh;
+	width: 300px;
+	align-self: center;
+	display: grid;
+	grid-template-rows: 1fr 0.5fr 0.5fr;
+	justify-items: center;
+}
+
+.words {
+	height: 70px;
+	width: 100%;
+	color: #fff;
+	letter-spacing: 1px;
+	padding: 0px 2px;
+	align-self:last baseline;
+	font-size: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgb(0 0 0 / 60%);
+	backdrop-filter: saturate(200%) blur(20px);
+	border-radius: 6px;
+	visibility: hidden;
+}
+
+.start {
+	height: 50px;
+	width: 150px;
+	font-size: 30px;
+	font-weight: 600;
+	align-self:center;
+	display: grid;
+	place-items: center;
+	border-radius: 6px;
+	user-select: none;
+	box-shadow:
+    inset 0 0 10px 1px #fff,
+    inset 10px 0 60px #9D3BF1, 
+    inset -40px 0 80px #65FFFE,
+    inset 10px 0 250px #9D3BF1, 
+    inset -20px 0 300px #65FFFE, 
+    0 0 40px #000,          
+    -10px 0 30px #9D3BF1,       
+    10px 0 30px #65FFFE;
+	transition: all 0.25s ease-in-out; 
+	/* visibility: hidden; */
+}
+
+.start:hover {
+	box-shadow:
+	inset 0 0 10px 1 #fff,     
+	inset 10px 0 60px #9429f0,
+	inset -40px 0 80px #51fffe,
+	inset 10px 0 250px #9429f0,
+	inset -20px 0 300px #51fffe,
+	0 0 40px #000,
+	-10px 0 30px #9429f0, 
+	10px 0 30px #51fffe;
+	transform: scale(1.02);
+}
+
+.start:active {
+	transition: transform 0.1s ease-out;
+	transform: scale(1);
+}
+
+
+
+.input {
+	align-self: center;
+	visibility: hidden;
+}
+
+input[type=text] {
+	background: rgb(0 0 0 / 60%);
+	backdrop-filter: saturate(200%) blur(20px);
+	font-size: 20px;
+	color: white;
+	height: 50px;
+	width: 175px;
+	text-align: center;
+}
+
+.score-zone {
+	height: 200px;
+	width: 250px;
+	background: rgb(0 0 0 / 30%);
+	backdrop-filter: saturate(180%) blur(20px);
+	align-self: center;
+	clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+	visibility: hidden;
+}
+
