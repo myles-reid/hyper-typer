@@ -61,15 +61,36 @@ body {
 	transform: translate(-50%, -50%);
 	text-shadow:
 			0 0 2px #000,
-      0 0 4px #fff,
-      0 0 11px #fff,
-      0 0 19px #fff,
-      0 0 40px #ccff00,
-      0 0 80px #ccff00,
-      0 0 90px #ccff00,
-      0 0 100px #ccff00,
-      0 0 150px #ccff00;
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px #2b51ff,
+      0 0 82px #2b51ff,
+      0 0 92px #2b51ff,
+      0 0 102px #2b51ff,
+      0 0 151px #2b51ff;
 	visibility: hidden;
+}
+
+.fade-out {
+	animation: fade-out 1.2s infinite;
+}
+
+@keyframes fade-out {
+	0% {
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 1;
+	}
+
+	50% {
+		transform: translate(-50%, -50%) scale(1.2);
+		opacity: 0.8;
+	}
+
+	100% {
+		transform: translate(-50%, -50%) scale(0);
+		opacity: 0;
+	}
 }
 
 .title {
@@ -273,11 +294,11 @@ input[type=text] {
 	0 0 7px #fff,
 	0 0 10px #fff,
 	0 0 21px #fff,
-	0 0 42px #5271ff,
-	0 0 82px #5271ff,
-	0 0 92px #5271ff,
-	0 0 102px #5271ff,
-	0 0 151px #5271ff;
+	0 0 42px #2b51ff,
+	0 0 82px #2b51ff,
+	0 0 92px #2b51ff,
+	0 0 102px #2b51ff,
+	0 0 151px #2b51ff;
 }
 
 .scores {
@@ -288,7 +309,7 @@ input[type=text] {
 }
 
 .first, .third {
-	padding-left: 20px;
+	padding-left: 10px;
 }
 .second {
 	padding-right: 55px;

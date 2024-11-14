@@ -100,6 +100,7 @@ class Score {
 
 function startCountDown() {
   let time = 3
+  addClass(countDownTimer, 'fade-out');
   countDownTimer.innerHTML = `<h2>${time}</h2>`;
   const intervalID = setInterval(() => {
     if (time > 1){
@@ -107,8 +108,9 @@ function startCountDown() {
     } else {
       countDownTimer.innerHTML = `<h2>GO!</h2>`;
       clearInterval(intervalID);
+      setTimeout(() => {removeClass(countDownTimer, 'fade-out')}, 2000);
     }
-  }, 1000);
+  }, 1100);
 };
 
 const words = [...wordBank];
@@ -181,7 +183,7 @@ function createNewScore() {
 }
 
 function startTimer() {
-  let time = 120
+  let time = 10
   timer.innerText = `${time}`
   const intervalID = setInterval(() => {
     if (time > 1){
@@ -198,9 +200,12 @@ function startTimer() {
 };
 
 function setCountDownState() {
-  toggleVisibility(countDownTimer, 'visible');
+  toggleVisibility(startBtn, 'hidden');
+  toggleVisibility(restartBtn, 'hidden');
   toggleVisibility(toolBar, 'hidden');
   toggleVisibility(highScoreBox, 'hidden');
+  toggleVisibility(instructions, 'hidden');
+  toggleVisibility(countDownTimer, 'visible');
 }
 
 function startGame() {
@@ -211,7 +216,7 @@ function startGame() {
     gameMusic.load();
     gameMusic.play();
     inputBox.focus();
-  }, 3500);
+  }, 4000);
 }
 
 function sortScores(scores) {
@@ -245,9 +250,7 @@ function setHighScores() {
 }
 
 listen('click', startBtn, () => {
-  toggleVisibility(instructions, 'hidden');
-  toggleVisibility(startBtn, 'hidden');
-  toggleVisibility(countDownTimer, 'visible');
+  setCountDownState();
   startCountDown();
   startGame();
 });
@@ -269,7 +272,6 @@ listen('input', inputBox, () => {
 })
 
 listen('click', restartBtn, () => {
-  toggleVisibility(restartBtn, 'hidden');
   inputBox.value = '';
   currentScore.innerHTML = `<p>Words Saved: ${score}</p>`;
   resetWords();
@@ -277,9 +279,3 @@ listen('click', restartBtn, () => {
   startCountDown();
   startGame();
 })
-
-
-
-
-
-
