@@ -183,7 +183,7 @@ function createNewScore() {
 }
 
 function startTimer() {
-  let time = 10
+  let time = 120
   timer.innerText = `${time}`
   const intervalID = setInterval(() => {
     if (time > 1){
@@ -238,13 +238,13 @@ function setHighScores() {
   if (highScores.length === 2) {
     firstPlace.innerText = `#1: ${sortedScores[0].score} on ${sortedScores[0].date}`;
     secondPlace.innerText = `#2: ${sortedScores[1].score} on ${sortedScores[1].date}`;
-    thirdPlace.innerText = `#3: Your Score here`;
+    thirdPlace.innerText = `#3: Could be you!`;
     return;
   }
   if (highScores.length === 1) {
     firstPlace.innerText = `#1: ${sortedScores[0].score} on ${sortedScores[0].date}`;
-    secondPlace.innerText = `#2: Your Name here`;
-    thirdPlace.innerText = `#3: Your Name here`;
+    secondPlace.innerText = `#2: Could be you!`;
+    thirdPlace.innerText = `#3: Could be you!`;
     return;
   }
 }

@@ -11,6 +11,7 @@ body {
   height: 100svh;
   overflow:hidden;
 	display: relative;
+	user-select: none;
 }
 
 .video-wrap {
@@ -44,7 +45,6 @@ body {
 	background: rgb(0 0 0 / 60%);
 	backdrop-filter: saturate(180%) blur(20px);
 	border-radius: 12px;
-	/* visibility: hidden; */
 }
 
 .count-down {
@@ -184,7 +184,7 @@ main {
 
 .play-zone {
 	height: 50svh;
-	width: 300px;
+	width: 325px;
 	align-self: center;
 	display: grid;
 	grid-template-rows: 1fr 0.5fr 0.5fr;
@@ -281,16 +281,17 @@ input[type=text] {
 	flex-direction: column;
 	align-items: center;
 	clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
-	visibility: hidden;
+	/* visibility: hidden; */
 }
 
 .score-zone h2 {
 	color: rbg(0 0 0 / 20%);
 	text-decoration: underline;
-	padding-left: 20px;
+	padding-left: 30px;
 	padding-top: 5px;
 	text-shadow:
-	0 0 4px #000,
+	0 0 2px #000, 
+	0 0 5px #000,
 	0 0 7px #fff,
 	0 0 10px #fff,
 	0 0 21px #fff,
@@ -313,5 +314,9 @@ input[type=text] {
 }
 .second {
 	padding-right: 55px;
+}
+
+.first::first-letter, .second::first-letter, .third::first-letter {
+	font-weight: 900;
 }
 
