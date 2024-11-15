@@ -42,8 +42,8 @@ body {
 	top: 35%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background: rgb(0 0 0 / 60%);
-	backdrop-filter: saturate(180%) blur(20px);
+	background: var(--app-bg-dark-translucent);
+	backdrop-filter: var(--app-backdrop);
 	border-radius: 12px;
 }
 
@@ -59,39 +59,10 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	text-shadow:
-			0 0 2px #000,
-      0 0 7px #fff,
-      0 0 10px #fff,
-      0 0 21px #fff,
-      0 0 42px #2b51ff,
-      0 0 82px #2b51ff,
-      0 0 92px #2b51ff,
-      0 0 102px #2b51ff,
-      0 0 151px #2b51ff;
+	text-shadow: var(--app-text-shadow-blue);
 	visibility: hidden;
 }
 
-.fade-out {
-	animation: fade-out 1.2s infinite;
-}
-
-@keyframes fade-out {
-	0% {
-		transform: translate(-50%, -50%) scale(1);
-		opacity: 1;
-	}
-
-	50% {
-		transform: translate(-50%, -50%) scale(1.2);
-		opacity: 0.8;
-	}
-
-	100% {
-		transform: translate(-50%, -50%) scale(0);
-		opacity: 0;
-	}
-}
 
 .title {
 	font-family: "Send Flowers", cursive;
@@ -104,16 +75,7 @@ body {
 	margin-inline: auto;
 	width: fit-content;
 	color: #fff;
-	text-shadow:
-			0 0 2px #000,
-      0 0 4px #fff,
-      0 0 11px #fff,
-      0 0 19px #fff,
-      0 0 40px #ccff00,
-      0 0 80px #ccff00,
-      0 0 90px #ccff00,
-      0 0 100px #ccff00,
-      0 0 150px #ccff00;
+	text-shadow: var(--app-text-shadow-yellow)
 	
 }
 
@@ -133,8 +95,8 @@ main {
 .tools {
 	height: 175px;
 	width: 250px;
-	background: rgb(0 0 0 / 30%);
-	backdrop-filter: saturate(180%) blur(20px);
+	background: var(--app-bg-light-translucent);
+	backdrop-filter: var(--app-backdrop);
 	align-self:center;
 	display: flex;
 	flex-direction: column;
@@ -202,7 +164,7 @@ main {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: rgb(0 0 0 / 60%);
+	background: var(--app-bg-dark-translucent);
 	backdrop-filter: saturate(200%) blur(20px);
 	border-radius: 6px;
 	visibility: hidden;
@@ -218,21 +180,12 @@ main {
 	place-items: center;
 	border-radius: 6px;
 	user-select: none;
-	box-shadow:
-    inset 0 0 10px 1px #fff,
-    inset 10px 0 60px #9D3BF1, 
-    inset -40px 0 80px #65FFFE,
-    inset 10px 0 250px #9D3BF1, 
-    inset -20px 0 300px #65FFFE, 
-    0 0 40px #000,          
-    -10px 0 30px #9D3BF1,       
-    10px 0 30px #65FFFE;
+	box-shadow: var(--app-button);
 	transition: all 0.25s ease-in-out; 
-	/* visibility: hidden; */
 }
 
 .start:hover, .restart:hover {
-	box-shadow:
+	box-shadow: 
 	inset 0 0 10px 1 #fff,     
 	inset 10px 0 60px #9429f0,
 	inset -40px 0 80px #51fffe,
@@ -261,7 +214,7 @@ main {
 }
 
 input[type=text] {
-	background: rgb(0 0 0 / 60%);
+	background: var(--app-bg-dark-translucent);
 	backdrop-filter: saturate(200%) blur(20px);
 	font-size: 20px;
 	color: white;
@@ -273,7 +226,7 @@ input[type=text] {
 .score-zone {
 	height: 200px;
 	width: 250px;
-	background: rgb(0 0 0 / 60%);
+	background: var(--app-bg-dark-translucent);
 	backdrop-filter: saturate(200%) blur(20px);
 	color: #fff;
 	align-self: center;
@@ -289,17 +242,7 @@ input[type=text] {
 	text-decoration: underline;
 	padding-left: 30px;
 	padding-top: 5px;
-	text-shadow:
-	0 0 2px #000, 
-	0 0 5px #000,
-	0 0 7px #fff,
-	0 0 10px #fff,
-	0 0 21px #fff,
-	0 0 42px #2b51ff,
-	0 0 82px #2b51ff,
-	0 0 92px #2b51ff,
-	0 0 102px #2b51ff,
-	0 0 151px #2b51ff;
+	text-shadow: var(--app-text-shadow-blue);
 }
 
 .scores {

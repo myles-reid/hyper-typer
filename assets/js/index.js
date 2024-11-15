@@ -98,9 +98,10 @@ class Score {
   get percentage() { return this.#percentage };
 }
 
+
 function startCountDown() {
   let time = 3
-  addClass(countDownTimer, 'fade-out');
+  addClass(countDownTimer, 'timer-fade-out');
   countDownTimer.innerHTML = `<h2>${time}</h2>`;
   const intervalID = setInterval(() => {
     if (time > 1){
@@ -108,7 +109,7 @@ function startCountDown() {
     } else {
       countDownTimer.innerHTML = `<h2>GO!</h2>`;
       clearInterval(intervalID);
-      setTimeout(() => {removeClass(countDownTimer, 'fade-out')}, 2000);
+      setTimeout(() => {removeClass(countDownTimer, 'timer-fade-out')}, 1000);
     }
   }, 1100);
 };
@@ -143,18 +144,31 @@ function resetWords() {
   }
 }
 
+function animateGameIn() {
+  removeClass(toolBar, 'fade-out');
+  removeClass(activeWord, 'fade-out');
+  removeClass(inputBox, 'fade-out');
+  removeClass(highScoreBox, 'fade-out');
+  addClass(toolBar, 'fade-in');
+  addClass(activeWord, 'fade-in');
+  addClass(inputBox, 'fade-in');
+  addClass(highScoreBox, 'fade-in');
+}
+
+
 function gameStateActive() {
   toggleVisibility(countDownTimer, 'hidden');
   toggleVisibility(toolBar, 'visible');
   toggleVisibility(activeWord, 'visible');
   toggleVisibility(inputBox, 'visible');
   toggleVisibility(highScoreBox, 'visible');
+  animateGameIn();
 }
 
-function gameStateDeactive() {
-  toggleVisibility(activeWord, 'hidden');
-  toggleVisibility(inputBox, 'hidden');
-  toggleVisibility(restartBtn, 'visible');
+function gameStateDeactive() {         
+    toggleVisibility(activeWord, 'hidden');
+    toggleVisibility(inputBox, 'hidden');
+    toggleVisibility(restartBtn, 'visible');
 }
 
 let score = 0;
@@ -188,16 +202,21 @@ function startTimer() {
   const intervalID = setInterval(() => {
     if (time > 1){
       timer.innerText = `${time -= 1}`;
+
     } else {
       timer.innerText = `END`
       clearInterval(intervalID);
-      gameStateDeactive();
-      createNewScore();
-      gameMusic.pause();
-      setHighScores();
+      gameEndState();
     }
   }, 1000);
 };
+
+function gameEndState() {
+  gameStateDeactive();
+  createNewScore();
+  gameMusic.pause();
+  setHighScores();
+}
 
 function setCountDownState() {
   toggleVisibility(startBtn, 'hidden');
@@ -205,7 +224,7 @@ function setCountDownState() {
   toggleVisibility(toolBar, 'hidden');
   toggleVisibility(highScoreBox, 'hidden');
   toggleVisibility(instructions, 'hidden');
-  toggleVisibility(countDownTimer, 'visible');
+  setTimeout(() => { toggleVisibility(countDownTimer, 'visible'); }, 500);
 }
 
 function startGame() {
@@ -216,7 +235,7 @@ function startGame() {
     gameMusic.load();
     gameMusic.play();
     inputBox.focus();
-  }, 4000);
+  }, 4900);
 }
 
 function sortScores(scores) {
@@ -249,9 +268,11 @@ function setHighScores() {
   }
 }
 
+
+
 listen('click', startBtn, () => {
   setCountDownState();
-  startCountDown();
+  setTimeout(() => { startCountDown(); }, 500);
   startGame();
 });
 
@@ -259,7 +280,7 @@ listen('click', startBtn, () => {
 listen('input', inputBox, () => {
   if (inputBox.value.toUpperCase().trim() === activeWord.innerText) { 
     collectSound.play();
-    setWord()
+    setWord();
     updateScore();
     inputBox.value = '';
     inputBox.focus();
@@ -276,6 +297,6 @@ listen('click', restartBtn, () => {
   currentScore.innerHTML = `<p>Words Saved: ${score}</p>`;
   resetWords();
   setCountDownState();
-  startCountDown();
+  setTimeout(() => { startCountDown(); }, 500);
   startGame();
 })

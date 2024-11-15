@@ -4,18 +4,42 @@
   --app-color-dark-bg: #1a1d28;
   --app-color-light-bg: #f9f9f9;
 
-  --app-red-background: #ff3c57;
-  --app-green-background: #33ab4e;
-  --app-blue-background: #3c57ff;
-  --app-purple-background: #833cff;
-  --app-orange-background: #ff833c;
+  --app-bg-dark-translucent: rgb(0 0 0 / 60%);
+  --app-bg-light-translucent: rgb(0 0 0 / 30%);
+  --app-text-shadow-yellow:
+      0 0 2px #000,
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #ccff00,
+      0 0 80px #ccff00,
+      0 0 90px #ccff00,
+      0 0 100px #ccff00,
+      0 0 150px #ccff00;
 
+  --app-text-shadow-blue:
+      0 0 2px #000,
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px #2b51ff,
+      0 0 82px #2b51ff,
+      0 0 92px #2b51ff,
+      0 0 102px #2b51ff,
+      0 0 151px #2b51ff;
 
-  --app-font-color: #242424;
-  --app-color-primary: #900;
-  --app-color-secondary: #c00000;
-  --app-color-tertiary: #994d00;
-  
-  --app-box-radius: 6px;
+  --app-backdrop: saturate(180%) blur(20px);
+
+  --app-button:
+    inset 0 0 10px 1px #fff,
+    inset 10px 0 60px #9D3BF1, 
+    inset -40px 0 80px #65FFFE,
+    inset 10px 0 250px #9D3BF1, 
+    inset -20px 0 300px #65FFFE, 
+    0 0 40px #000,          
+    -10px 0 30px #9D3BF1,       
+    10px 0 30px #65FFFE;
+
+  --app-box-radius: 8px;
   --app-box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
 }
