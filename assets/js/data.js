@@ -1,4 +1,4 @@
-const wordBank = [
+export const wordBank = [
   'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building',
   'population', 'weather', 'bottle', 'history', 'dream', 'character', 'money',
   'absolute', 'discipline', 'machine', 'accurate', 'connection', 'rainbow',

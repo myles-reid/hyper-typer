@@ -61,11 +61,13 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
+// Copying the wordBank to prevent mutation.
 const words = [...wordBank];
 const usedWords = [];
 const highScores = [];
 
 function getWord(array) {
+  // will shuffle the array every time a new word is picked.
   shuffleArray(array)
   let word = array.pop();
   usedWords.push(word);
