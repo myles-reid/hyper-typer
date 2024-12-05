@@ -1,4 +1,4 @@
-# Mock Facebook (Makebook)
+# Hyper Typer
 Hyper Typer is a fast-paced typing game where players race against time to save
 words from being abducted by aliens. Your goal? Type as many words as possible 
 in two minutes to rack up a high score!
