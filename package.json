@@ -1,0 +1,15 @@
+{
+  "name": "myles_reid_oojs_final",
+  "version": "1.0.0",
+  "description": "Hyper Typer is a fast-paced typing game where players race against time to save\r words from being abducted by aliens. Your goal? Type as many words as possible \r in two minutes to rack up a high score!",
+  "main": "index.js",
+  "scripts": {
+    "start": "lite-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lite-server": "^2.6.1"
+  }
+}

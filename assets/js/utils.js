@@ -1,27 +1,27 @@
-function select(selector, scope = document) {
+export function select(selector, scope = document) {
   return scope.querySelector(selector);
 }
 
-function selectAll(selector, scope = document) {
+export function selectAll(selector, scope = document) {
   return scope.querySelectorAll(selector);
 }
 
-function listen(event, element, callback) {
+export function listen(event, element, callback) {
   return element.addEventListener(event, callback);
 }
 
-function toggleVisibility(element, status) {
+export function toggleVisibility(element, status) {
   return element.style.visibility = status;
 }
 
-function addClass(element, text) {
+export function addClass(element, text) {
   return element.classList.add(text);
 }
 
-function removeClass(element, text) {
+export function removeClass(element, text) {
   return element.classList.remove(text);
 }
 
-function toggleClass(element, text) {
+export function toggleClass(element, text) {
   return element.classList.toggle(text);
 }
