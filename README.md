@@ -21,9 +21,9 @@ This was a really great project to just put all of my previous knowledge to the 
 
 ## Screenshots
 
-![App Screenshot](./assets/img/screenshot-01.png)
-![App Screenshot](./assets/img/screenshot-02.png)
-![App Screenshot](./assets/img/screenshot-03.png)
+<img src="./assets/img/screenshot-01.png" width="300">
+<img src="./assets/img/screenshot-02.png" width="300">
+
 
 
 ---
