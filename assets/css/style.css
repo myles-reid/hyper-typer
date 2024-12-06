@@ -170,7 +170,7 @@ main {
 	visibility: hidden;
 }
 
-.start, .restart {
+.start, .play-again, .restart {
 	height: 50px;
 	width: 150px;
 	font-size: 30px;
@@ -184,7 +184,7 @@ main {
 	transition: all 0.25s ease-in-out; 
 }
 
-.start:hover, .restart:hover {
+.start:hover, .play-again:hover, .restart:hover {
 	box-shadow: 
 	inset 0 0 10px 1 #fff,     
 	inset 10px 0 60px #9429f0,
@@ -197,12 +197,12 @@ main {
 	transform: scale(1.02);
 }
 
-.start:active, .restart:active {
+.start:active, .play-again:active, .restart:active {
 	transition: transform 0.1s ease-out;
 	transform: scale(1);
 }
 
-.restart {
+.play-again {
 	position: absolute;
 	visibility: hidden;
 }
@@ -223,7 +223,7 @@ input[type=text] {
 	text-align: center;
 }
 
-.score-zone {
+.right-zone {
 	height: 200px;
 	width: 250px;
 	background: var(--app-bg-dark-translucent);
@@ -233,11 +233,12 @@ input[type=text] {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
-	visibility: hidden;
+	/* visibility: hidden; */
 }
 
-.score-zone h2 {
+.right-zone h2 {
 	color: rbg(0 0 0 / 20%);
 	text-decoration: underline;
 	padding-left: 30px;
@@ -245,21 +246,9 @@ input[type=text] {
 	text-shadow: var(--app-text-shadow-blue);
 }
 
-.scores {
-	height: 120px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
+.restart {
+	position:absolute;
+	left: 12%;
 }
 
-.first, .third {
-	padding-left: 10px;
-}
-.second {
-	padding-right: 55px;
-}
-
-.first::first-letter, .second::first-letter, .third::first-letter {
-	font-weight: 900;
-}
 

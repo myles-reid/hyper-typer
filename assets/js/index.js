@@ -11,7 +11,8 @@ const currentScore = select('.rescues');
 const activeWord = select('.words');
 const startBtn = select('.start');
 const inputBox = select('.input');
-const highScoreBox = select('.score-zone');
+const highScoreBox = select('.right-zone');
+const playAgainBtn = select('.play-again');
 const restartBtn = select('.restart');
 const firstPlace = select('.first');
 const secondPlace = select('.second');
@@ -83,10 +84,11 @@ function gameStateActive() {
   animateGameIn();
 }
 
-function gameStateDeactive() {         
+function gameStateDeactive() {    
+  gameMusic.pause();     
   toggleVisibility(activeWord, 'hidden');
   toggleVisibility(inputBox, 'hidden');
-  toggleVisibility(restartBtn, 'visible');
+  toggleVisibility(playAgainBtn, 'visible');
 }
 
 let score = 0;
@@ -106,6 +108,13 @@ function getDate() {
   return new Date().toLocaleDateString('en-ca', options);
 }
 
+function sortScores(scores) {
+  let sortedScores = scores.sort(function(a, b){
+    return b.score - a.score;
+  })
+  return sortedScores;
+}
+
 function createNewScore() {
   const newScore = {
     date: getDate(),
@@ -114,15 +123,26 @@ function createNewScore() {
   };
 
   highScores.push(newScore);
-  
-
   return score = 0;
 }
+
+function saveScores() {
+  createNewScore();
+  sortScores(highScores);
+
+  if (localStorage.length > 0 && 'highScores' in localStorage){
+    localStorage.removeItem('highScores');
+  }
+
+  localStorage.setItem('highScores', JSON.stringify(highScores.slice(0, 10)));
+}
+
+let intervalID;
 
 function startTimer() {
   let time = 20;
   timer.innerText = `${time}`
-  const intervalID = setInterval(() => {
+ intervalID = setInterval(() => {
     if (time > 1){
       timer.innerText = `${time -= 1}`;
 
@@ -136,14 +156,13 @@ function startTimer() {
 
 function gameEndState() {
   gameStateDeactive();
-  createNewScore();
-  gameMusic.pause();
+  saveScores();
   setHighScores();
 }
 
 function setCountDownState() {
   toggleVisibility(startBtn, 'hidden');
-  toggleVisibility(restartBtn, 'hidden');
+  toggleVisibility(playAgainBtn, 'hidden');
   toggleVisibility(toolBar, 'hidden');
   toggleVisibility(highScoreBox, 'hidden');
   toggleVisibility(instructions, 'hidden');
@@ -161,12 +180,6 @@ function startGame() {
   }, 4900);
 }
 
-function sortScores(scores) {
-  let sortedScores = scores.sort(function(a, b){
-    return b.score - a.score;
-  })
-  return sortedScores;
-}
 
 function setHighScores() {
   let sortedScores = sortScores(highScores);
@@ -201,15 +214,21 @@ listen('input', inputBox, () => {
   if (words.length === 0){
     gameStateDeactive();
     clearInterval(intervalID);
-    createNewScore();
+    saveScores();
   }
 })
 
-listen('click', restartBtn, () => {
+function restartGame() {
+  gameStateDeactive();
+  clearInterval(intervalID);
+  score = 0;
   inputBox.value = '';
   currentScore.innerHTML = `<p>Words Saved: ${score}</p>`;
   resetWords();
   setCountDownState();
   setTimeout(() => { startCountDown(); }, 500);
   startGame();
-})
+}
+
+listen('click', playAgainBtn, restartGame);
+listen('click', restartBtn, restartGame);
