@@ -14,11 +14,12 @@ const currentScore = select('.rescues');
 const activeWord = select('.words');
 const startBtn = select('.start');
 const inputBox = select('.input');
-const highScoreBox = select('.right-zone');
+const rightBox = select('.right-zone');
 const playAgainBtn = select('.play-again');
 const restartBtn = select('.restart');
 const highScoreBtn = select('.high-scores-button');
 const scoresModal = select('dialog');
+const highScoresList = select('.high-scores');
 const closeBtn = select('.close');
 const gameMusic = new Audio('./assets/audio/bgmusic.mp3');
 const collectSound = new Audio('./assets/audio/collect.mp3')
@@ -70,11 +71,11 @@ function animateGameIn() {
   removeClass(toolBar, 'fade-out');
   removeClass(activeWord, 'fade-out');
   removeClass(inputBox, 'fade-out');
-  removeClass(highScoreBox, 'fade-out');
+  removeClass(rightBox, 'fade-out');
   addClass(toolBar, 'fade-in');
   addClass(activeWord, 'fade-in');
   addClass(inputBox, 'fade-in');
-  addClass(highScoreBox, 'fade-in');
+  addClass(rightBox, 'fade-in');
 }
 
 
@@ -83,7 +84,8 @@ function gameStateActive() {
   toggleVisibility(toolBar, 'visible');
   toggleVisibility(activeWord, 'visible');
   toggleVisibility(inputBox, 'visible');
-  toggleVisibility(highScoreBox, 'visible');
+  toggleVisibility(rightBox, 'visible');
+  toggleVisibility(restartBtn, 'visible');
   animateGameIn();
 }
 
@@ -92,6 +94,8 @@ function gameStateDeactive() {
   toggleVisibility(activeWord, 'hidden');
   toggleVisibility(inputBox, 'hidden');
   toggleVisibility(playAgainBtn, 'visible');
+  toggleVisibility(restartBtn, 'hidden');
+  toggleVisibility(highScoreBtn, 'visible');
 }
 
 let score = 0;
@@ -130,14 +134,16 @@ function createNewScore() {
 }
 
 function saveScores() {
-  createNewScore();
-  sortScores(highScores);
+  if (score > 0) {
+    createNewScore();
+    sortScores(highScores);
 
-  if (localStorage.length > 0 && 'highScores' in localStorage){
-    localStorage.removeItem('highScores');
+    if (localStorage.length > 0 && 'highScores' in localStorage){
+      localStorage.removeItem('highScores');
+    }
+
+    localStorage.setItem('highScores', JSON.stringify(highScores.slice(0, 9)));
   }
-
-  localStorage.setItem('highScores', JSON.stringify(highScores.slice(0, 9)));
 }
 
 let intervalID;
@@ -161,14 +167,19 @@ function gameEndState() {
   gameStateDeactive();
   saveScores();
   setHighScores();
+  if (scoresModal.classList.contains('slide-down')) {
+    replaceClass(scoresModal, 'slide-down', 'slide-up');
+  }
+  scoresModal.showModal();
 }
 
 function setCountDownState() {
   toggleVisibility(startBtn, 'hidden');
   toggleVisibility(playAgainBtn, 'hidden');
   toggleVisibility(toolBar, 'hidden');
-  toggleVisibility(highScoreBox, 'hidden');
+  toggleVisibility(rightBox, 'hidden');
   toggleVisibility(instructions, 'hidden');
+  toggleVisibility(highScoreBtn, 'hidden');
   setTimeout(() => { toggleVisibility(countDownTimer, 'visible'); }, 500);
 }
 
@@ -185,16 +196,18 @@ function startGame() {
 
 
 function setHighScores() {
-  let sortedScores = sortScores(highScores);
-  const placeholders = ['Could be you!', 'Could be you!', 'Could be you!'];
-
-  sortedScores.slice(0, 3).forEach((score, index) => {
-    placeholders[index] = `#${index + 1}: ${score.score} on ${score.date}`;
-  });
-
-  firstPlace.innerText = placeholders[0];
-  secondPlace.innerText = placeholders[1];
-  thirdPlace.innerText = placeholders[2];
+  const retrievedScores = JSON.parse(localStorage.getItem('highScores'));
+  highScoresList.innerHTML = '';
+  if (retrievedScores != null) {
+    retrievedScores.forEach((score, index) => {
+      highScoresList.innerHTML += `
+      <li><span class="position">${index + 1}:</span>
+      ${score.score.toString().padStart(2, '0')} Words 
+      <span class="date">${score.date}</span></li>`;
+    });
+  } else {
+    highScoresList.innerHTML = `<p>No Scores Yet!<p>`;
+  }
 }
 
 
@@ -209,6 +222,7 @@ listen('click', highScoreBtn, () => {
   if (scoresModal.classList.contains('slide-down')) {
     replaceClass(scoresModal, 'slide-down', 'slide-up');
   }
+  setHighScores();
   scoresModal.showModal(); 
 });
 
@@ -223,15 +237,15 @@ listen('click', closeBtn, () => {
 
 listen('click', scoresModal, function(e) {
   const rect = this.getBoundingClientRect();
-  if (e.clientY < rect.top || e.clientY > rect.bottom || 
-      e.clientX < rect.left || e.clientX > rect.right) {
-    if(scoresModal.classList.contains('slide-up')) {
-      removeClass(scoresModal, 'slide-up');
-      setTimeout(() => addClass(scoresModal, 'slide-down'), 100);
-    }
-    setTimeout(() => scoresModal.close(), 500);
 
-  }
+  if (e.clientY < rect.top || e.clientY > rect.bottom || 
+    e.clientX < rect.left || e.clientX > rect.right) {
+      if (scoresModal.classList.contains('slide-up')) {
+        removeClass(scoresModal, 'slide-up');
+        setTimeout(() => addClass(scoresModal, 'slide-down'), 100);
+      }  
+      setTimeout(() => scoresModal.close(), 500); 
+    };
 });
 
 listen('input', inputBox, () => {
@@ -250,6 +264,7 @@ listen('input', inputBox, () => {
 })
 
 function restartGame() {
+  if(scoresModal.open) scoresModal.close();
   gameStateDeactive();
   setCountDownState();
   clearInterval(intervalID);

@@ -66,6 +66,10 @@ dialog h2 {
 	text-decoration: underline;
 }
 
+dialog::backdrop {
+	backdrop-filter: blur(4px);
+}
+
 .close {
 	position: absolute;
 	top: 15px;
@@ -80,12 +84,18 @@ dialog h2 {
 ol {
 	margin-left: 20px;
 	margin-right: 20px;
+	display: grid;
 
 	li {
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 5px;
 		font-size: 18px;
+	}
+
+	p {
+		place-self: center;
+		margin-top: 40px;
 	}
 
 	.position {
@@ -238,6 +248,10 @@ main {
 	visibility: hidden;
 }
 
+.correct {
+	color: #00ff00;
+}
+
 .start, .play-again, .restart {
 	height: 50px;
 	width: 150px;
@@ -315,7 +329,7 @@ input[type=text] {
 	text-shadow: var(--app-text-shadow-blue);
 }
 
-.restart {
+.restart, .play-again {
 	position:absolute;
 	left: 12%;
 }
