@@ -1,6 +1,6 @@
 'use strict';
 
-import { select, addClass, removeClass, toggleVisibility, listen } from './utils.js';
+import { select, addClass, removeClass, toggleVisibility, listen, shuffleArray } from './utils.js';
 import { wordBank } from './data.js';
 
 const instructions = select('.instructions');
@@ -23,23 +23,6 @@ collectSound.volume = 0.2;
 gameMusic.type = 'audio/mp3';
 gameMusic.volume = 0.2;
 
-class Score {
-  #date;
-  #score;
-  #percentage;
-
-  constructor(date, score, percentage) {
-    this.#date = date;
-    this.#score = score;
-    this.#percentage = percentage;
-  }
-
-  get date() { return this.#date };
-  get score() { return this.#score };
-  get percentage() { return this.#percentage };
-}
-
-
 function startCountDown() {
   let time = 3
   addClass(countDownTimer, 'timer-fade-out');
@@ -56,11 +39,6 @@ function startCountDown() {
 };
 
 
-
-function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
 // Copying the wordBank to prevent mutation.
 const words = [...wordBank];
 const usedWords = [];
@@ -68,7 +46,7 @@ const highScores = [];
 
 function getWord(array) {
   // will shuffle the array every time a new word is picked.
-  shuffleArray(array)
+  shuffleArray(array);
   let word = array.pop();
   usedWords.push(word);
   return word.toUpperCase(); 
@@ -106,9 +84,9 @@ function gameStateActive() {
 }
 
 function gameStateDeactive() {         
-    toggleVisibility(activeWord, 'hidden');
-    toggleVisibility(inputBox, 'hidden');
-    toggleVisibility(restartBtn, 'visible');
+  toggleVisibility(activeWord, 'hidden');
+  toggleVisibility(inputBox, 'hidden');
+  toggleVisibility(restartBtn, 'visible');
 }
 
 let score = 0;
@@ -120,24 +98,29 @@ function updateScore() {
 
 function getDate() {
   const options = {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit' 
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit' 
   } 
-
+  
   return new Date().toLocaleDateString('en-ca', options);
 }
 
 function createNewScore() {
-  let percentage = (score / wordBank.length) * 100;
-  const highScore = new Score(getDate(), score, percentage.toFixed(1));
-  highScores.push(highScore);
+  const newScore = {
+    date: getDate(),
+    score: score,
+    percentage: ((score / wordBank.length) * 100).toFixed(1)
+  };
+
+  highScores.push(newScore);
+  
 
   return score = 0;
 }
 
 function startTimer() {
-  let time = 120
+  let time = 20;
   timer.innerText = `${time}`
   const intervalID = setInterval(() => {
     if (time > 1){
@@ -187,25 +170,15 @@ function sortScores(scores) {
 
 function setHighScores() {
   let sortedScores = sortScores(highScores);
-  console.log(sortedScores[0]);
-  if (highScores.length >= 3) {
-    firstPlace.innerText = `#1: ${sortedScores[0].score} on ${sortedScores[0].date}`;
-    secondPlace.innerText = `#2: ${sortedScores[1].score} on ${sortedScores[1].date}`;
-    thirdPlace.innerText = `#3: ${sortedScores[2].score} on ${sortedScores[2].date}`;
-    return;
-  }
-  if (highScores.length === 2) {
-    firstPlace.innerText = `#1: ${sortedScores[0].score} on ${sortedScores[0].date}`;
-    secondPlace.innerText = `#2: ${sortedScores[1].score} on ${sortedScores[1].date}`;
-    thirdPlace.innerText = `#3: Could be you!`;
-    return;
-  }
-  if (highScores.length === 1) {
-    firstPlace.innerText = `#1: ${sortedScores[0].score} on ${sortedScores[0].date}`;
-    secondPlace.innerText = `#2: Could be you!`;
-    thirdPlace.innerText = `#3: Could be you!`;
-    return;
-  }
+  const placeholders = ['Could be you!', 'Could be you!', 'Could be you!'];
+
+  sortedScores.slice(0, 3).forEach((score, index) => {
+    placeholders[index] = `#${index + 1}: ${score.score} on ${score.date}`;
+  });
+
+  firstPlace.innerText = placeholders[0];
+  secondPlace.innerText = placeholders[1];
+  thirdPlace.innerText = placeholders[2];
 }
 
 

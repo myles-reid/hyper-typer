@@ -25,3 +25,7 @@ export function removeClass(element, text) {
 export function toggleClass(element, text) {
   return element.classList.toggle(text);
 }
+
+export function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
