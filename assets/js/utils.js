@@ -22,6 +22,10 @@ export function removeClass(element, text) {
   return element.classList.remove(text);
 }
 
+export function replaceClass(element, currentClass, newClass) {
+  return element.classList.replace(currentClass, newClass);
+}
+
 export function toggleClass(element, text) {
   return element.classList.toggle(text);
 }

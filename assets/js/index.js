@@ -1,6 +1,9 @@
 'use strict';
 
-import { select, addClass, removeClass, toggleVisibility, listen, shuffleArray } from './utils.js';
+import { 
+  select, addClass, removeClass, toggleVisibility, 
+  listen, shuffleArray, replaceClass 
+} from './utils.js';
 import { wordBank } from './data.js';
 
 const instructions = select('.instructions');
@@ -14,9 +17,9 @@ const inputBox = select('.input');
 const highScoreBox = select('.right-zone');
 const playAgainBtn = select('.play-again');
 const restartBtn = select('.restart');
-const firstPlace = select('.first');
-const secondPlace = select('.second');
-const thirdPlace = select('.third');
+const highScoreBtn = select('.high-scores-button');
+const scoresModal = select('dialog');
+const closeBtn = select('.close');
 const gameMusic = new Audio('./assets/audio/bgmusic.mp3');
 const collectSound = new Audio('./assets/audio/collect.mp3')
 collectSound.type = 'audio/mp3';
@@ -134,7 +137,7 @@ function saveScores() {
     localStorage.removeItem('highScores');
   }
 
-  localStorage.setItem('highScores', JSON.stringify(highScores.slice(0, 10)));
+  localStorage.setItem('highScores', JSON.stringify(highScores.slice(0, 9)));
 }
 
 let intervalID;
@@ -202,6 +205,34 @@ listen('click', startBtn, () => {
   startGame();
 });
 
+listen('click', highScoreBtn, () => { 
+  if (scoresModal.classList.contains('slide-down')) {
+    replaceClass(scoresModal, 'slide-down', 'slide-up');
+  }
+  scoresModal.showModal(); 
+});
+
+
+listen('click', closeBtn, () => { 
+  if (scoresModal.classList.contains('slide-up')) {
+    removeClass(scoresModal, 'slide-up');
+    setTimeout(() => addClass(scoresModal, 'slide-down'), 100);
+  }  
+  setTimeout(() => scoresModal.close(), 500); 
+});
+
+listen('click', scoresModal, function(e) {
+  const rect = this.getBoundingClientRect();
+  if (e.clientY < rect.top || e.clientY > rect.bottom || 
+      e.clientX < rect.left || e.clientX > rect.right) {
+    if(scoresModal.classList.contains('slide-up')) {
+      removeClass(scoresModal, 'slide-up');
+      setTimeout(() => addClass(scoresModal, 'slide-down'), 100);
+    }
+    setTimeout(() => scoresModal.close(), 500);
+
+  }
+});
 
 listen('input', inputBox, () => {
   if (inputBox.value.toUpperCase().trim() === activeWord.innerText) { 
@@ -220,12 +251,12 @@ listen('input', inputBox, () => {
 
 function restartGame() {
   gameStateDeactive();
+  setCountDownState();
   clearInterval(intervalID);
   score = 0;
   inputBox.value = '';
   currentScore.innerHTML = `<p>Words Saved: ${score}</p>`;
   resetWords();
-  setCountDownState();
   setTimeout(() => { startCountDown(); }, 500);
   startGame();
 }
