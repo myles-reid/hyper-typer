@@ -194,6 +194,20 @@ function startGame() {
   }, 4900);
 }
 
+function restartGame() {
+  if(scoresModal.open) scoresModal.close();
+  gameStateDeactive();
+  setCountDownState();
+  clearInterval(intervalID);
+  score = 0;
+  inputBox.value = '';
+  currentScore.innerHTML = `<p>Words Saved: ${score}</p>`;
+  resetWords();
+  setTimeout(() => { startCountDown(); }, 500);
+  startGame();
+}
+
+
 
 function setHighScores() {
   const retrievedScores = JSON.parse(localStorage.getItem('highScores'));
@@ -262,19 +276,6 @@ listen('input', inputBox, () => {
     saveScores();
   }
 })
-
-function restartGame() {
-  if(scoresModal.open) scoresModal.close();
-  gameStateDeactive();
-  setCountDownState();
-  clearInterval(intervalID);
-  score = 0;
-  inputBox.value = '';
-  currentScore.innerHTML = `<p>Words Saved: ${score}</p>`;
-  resetWords();
-  setTimeout(() => { startCountDown(); }, 500);
-  startGame();
-}
 
 listen('click', playAgainBtn, restartGame);
 listen('click', restartBtn, restartGame);
