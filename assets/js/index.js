@@ -149,7 +149,7 @@ function saveScores() {
 let intervalID;
 
 function startTimer() {
-  let time = 120;
+  let time = 60;
   timer.innerText = `${time}`
  intervalID = setInterval(() => {
     if (time > 1){
